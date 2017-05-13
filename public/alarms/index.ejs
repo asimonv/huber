@@ -1,0 +1,248 @@
+<html ng-app>
+	<head>
+	<title>Huber</title>
+	<link rel="stylesheet" href="css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" href="css/balloons.css">
+	<!--<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">-->
+	<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+	</head>
+	<body>
+		<!--<div id="bar"></div>-->
+		<nav id="navbar-app" class="navbar navbar-fixed-top">
+	      <div class="container">
+	        <div class="navbar-header">
+	          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+	            <span class="sr-only">Toggle navigation</span>
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	          </button>
+	          <a class="navbar-brand navbar-item" href="#">Huber</a>
+	        </div>
+	        <div id="navbar" class="collapse navbar-collapse">
+	          <ul class="nav navbar-nav">
+	            <li class="active"><a href="#" class="navbar-item">Home</a></li>
+	            <li><a href="#about" class="navbar-item">About</a></li>
+	            <li><a target="_blank" class="navbar-item" href="http://twitter.com/asimonv">Contact</a></li>
+	          </ul>
+	          <ul class="nav navbar-nav navbar-right">
+        		<li><a id="add-task-button"><i class="icon icon-xs icon-add"></i></a></li>
+	          </ul>
+	        </div><!--/.nav-collapse -->
+	      </div>
+	    </nav>
+
+	    <nav class="navbar navbar-fixed-top alert-navbar">
+	    	<div class="container container-alert">
+	    		<ul class="inline-ul alert-ul">
+    				<li style="margin-right:20px;"><p class="nav-alert-message"><i class="icon icon-xs icon-fire"></i> Huber has detected a posible fire</p></li>
+					<li><button class="btn btn-dismiss-alert btn-alert">dismiss</button></li>
+					<li><button class="btn btn-go-alert btn-alert">go</button></li>
+				</ul>
+	    	</div>
+	    </nav>
+
+		<div class="container" id="content-wrapper" ng-controller="AlarmController">
+			<p>{{alarmID}}</p>
+		</div>
+
+		<!-- Modal -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Add new task</h4>
+		      </div>
+		      <div class="modal-body">
+		        <form class="form-horizontal">
+					  <div class="form-group">
+					    <label for="inputEmail3" class="col-sm-2 control-label">Task Name</label>
+					    <div class="col-sm-10">
+					      <input type="text" class="form-control" id="inputEmail3" placeholder="Add name for the new task">
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="inputPassword3" class="col-sm-2 control-label">Ammount</label>
+					    <div class="col-sm-10">
+					      <input type="text" class="form-control" id="inputPassword3" placeholder="Please add your goal for this task">
+					    </div>
+					  </div>
+
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        <button id="button-submit-new-task" type="button" class="btn btn-primary">Add</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+
+		<div class="particle-box"></div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+
+	<script>
+
+		$(function(){
+			var socket = io();
+			var state = true;
+
+			var alarm;
+
+			socket.on('new_task', function(data){
+				console.log('recieved new task')
+
+				var task = data.msg
+
+				var obj = '<div class="tasks" ng-repeat="task in tasks"><p class="task-title" style="font-weight:bold;">'+task.name+' <i class="icon icon-xs icon-map-marker"></i></p><p class="creator-title">'+task.by+'</p><div class="row"><div class="col-md-12"><div class="row"><div class="col-md-10"><div class="progress"><div id="'+task._id+'" class="progress-bar progress-bar-danger progress-bar-striped active task-progress" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em; width:0%">0%</div></div></div><div class="col-md-2"><p><span id="tsk-'+task._id+'-cr" class="task-current">'+task.current+'</span>/<span id="tsk-'+task._id+'-gl" class="task-goal">'+task.goal+'</span></p></div></div><button id="'+task._id+'" class="button-update btn">update</button></div></div></div>'
+
+				$(obj).hide().prependTo("#task-container").fadeIn(1000);
+
+
+			})
+
+			socket.on('new_alarm', function(data){
+				console.log(data);
+
+				alarm = data.msg;
+
+				$.when($('.navbar-item').fadeOut(300)).done(function(){
+					$(".alert-navbar").fadeIn(500);
+				});
+
+				var sound = new Howl({
+				  src: ['/assets/audio/gentle-alarm.mp3']
+				});
+
+				sound.play();
+
+			});
+
+			socket.on('update_task', function(data){
+				console.log('recieving data')
+				
+				var obj = data.msg
+
+				console.log(obj);
+
+				$('#'+ obj._id).css('width', obj.percentage+'%').attr('aria-valuenow', obj.percentage);
+				$('#tsk-'+obj._id + '-cr').text(obj.current)
+				$('#tsk-'+obj._id + '-gl').text(obj.goal)
+
+				$('#'+ obj._id).attr('class', 'progress-bar ' + obj.progressClass + ' progress-bar-striped active task-progress')
+				$('#'+ obj._id).text(`${Math.round(obj.percentage)}%`)
+
+			});
+
+			$(document).on('click', ".button-update", function() {
+				console.log('gg');
+
+				socket.emit('update_task', {id: this.id, name: 'cool'}); 
+				socket.emit('new_alarm', {});
+				/*
+
+				$.notify("Huber detected a posible fire", {
+					style: 'happyblue',
+					className:  "error",
+					autoHide: false,
+					clickToHide: true,
+					showAnimation: 'slideDown'
+				});
+
+				(function(count) {
+			        if (count < 10) {
+			            // call the function.
+			            foo(); 
+
+			            // The currently executing function which is an anonymous function.
+			            var caller = arguments.callee; 
+			            window.setTimeout(function() {
+			                // the caller and the count variables are
+			                // captured in a closure as they are defined
+			                // in the outside scope.
+			                caller(count + 1);
+			            }, 500);    
+			        }
+			    })(0);
+
+			*/
+			});
+
+			$('#add-task-button').on('click', function(){
+				$('#myModal').modal('toggle')
+			});
+
+			$('.btn-dismiss-alert').on('click', function(){
+				$.when($('.alert-navbar').fadeOut(500)).done(function(){
+					$('.navbar-item').fadeIn(300);
+				});
+				
+			});
+
+			$('.btn-go-alert').on('click', function(){
+				$.when($('.alert-navbar').fadeOut(500)).done(function(){
+					$('.navbar-item').fadeIn(300);
+				});
+				
+			});
+
+			$('#button-submit-new-task').on('click', function(){
+				var data = {name: $('#inputEmail3').val(), goal: $('#inputPassword3').val()}
+				socket.emit('new_task', data);
+				$('#myModal').modal('toggle');
+			});
+
+			function foo(){
+			    var b = Math.floor((Math.random() * 100) + 1);
+			    var d = ["flowOne", "flowTwo", "flowThree"];
+			    var a = ["colOne", "colTwo", "colThree", "colFour", "colFive", "colSix"];
+			    var c = (Math.random() * (1.6 - 1.2) + 1.2).toFixed(1);
+			    $('<div class="particle part-' + b + " " + a[Math.floor((Math.random() * 6))] + '" style="font-size:' + Math.floor(Math.random() * (30 - 22) + 22) + 'px;"><i class="fa fa-heart-o"></i><i class="fa fa-heart"></i></div>').appendTo(".particle-box").css({
+			        animation: "" + d[Math.floor((Math.random() * 3))] + " " + c + "s linear"
+			    });
+			    $(".part-" + b).show();
+			    setTimeout(function() {
+			        $(".part-" + b).remove()
+			    }, c * 1000 - 100)
+			}
+
+			$(document).on('click', '.notifyjs-happyblue-base', function() {
+			  //programmatically trigger propogating hide event
+			  console.log("dismiss");
+			  $(this).trigger('notify-hide');
+			});
+
+			$.notify.addStyle('happyblue', {
+			  html: "<div><i class='icon icon-xs icon-white icon-fire'></i> <span data-notify-text/></div>",
+			  classes: {
+			    base: {
+			      "white-space": "nowrap",
+			      "background-color": "#F22613",
+			      "padding": "10px",
+			      "color": "white",
+			      "border-radius": "5px",
+			      "font-weight": "500"
+			    },
+			    superblue: {
+			      "color": "white",
+			      "background-color": "blue"
+			    }
+			  }
+			});
+
+		});
+
+	</script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
+	<script type="text/javascript" src="controllers/taskscontroller.js"></script>
+	<script src="js/prefixfree.min.js"></script>
+	<script src="js/notify.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.3/howler.min.js"></script>
+	</body>
+</html>

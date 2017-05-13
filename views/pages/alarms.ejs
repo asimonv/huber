@@ -1,0 +1,88 @@
+<html ng-app>
+	<head>
+	<title>Huber | Alarms</title>
+	<link rel="stylesheet" href="../css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
+	<link rel="stylesheet" href="../css/balloons.css">
+	<!--<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">-->
+	<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+	</head>
+	<body>
+		<% include ../partials/navbar %>
+	    <% include ../partials/alarm-alert %>
+	    <% include ../partials/task-completed-notification %>
+
+		<div class="container alert-wrapper" id="content-wrapper" ng-controller="AlarmController">
+			<div class="row alert-row">
+				<div class="col-md-1" style="text-align: center;"><i class="icon icon-alert"></i></div>
+				<div class="col-md-11">
+					<p class="alert-title">Alert · <%= date_created %></p>
+					<p class="alarm-description">Our sensors have detected that there's a posible fire here. You still have time to alert others. This new task will appear in the live feed of everyone who is suscribed to this type of alert.</p>
+				</div>
+			</div>
+			<div id="location" style="width:100%; min-height: 450px;"></div>
+			<div class="container" style="padding: 20px;">
+				<p style="color: black; font-weight: 500;">Do you want to create a new task?</p>
+				<p>You can delete it at any time if you want to.</p>
+				<div style="display: flex;justify-content: center; background-color: white;">
+						<ul class="inline-ul">
+							<li><button class="btn btn-create-new-task" style="color: red;font-weight: 600;text-transform: uppercase;padding: 6;background-color: transparent;">yes</button></li>
+							<li style="margin-left:40px;"><button class="btn btn-dismiss" style="color: red;font-weight: 600;text-transform: uppercase;padding: 6;background-color: transparent;">no</button></li>
+						</ul>
+				</div>
+			</div>
+		</div>
+
+		<% include ../partials/new-task-modal.ejs %>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+
+	<script>
+
+		function initMap(lat, lon) {
+	        var uluru = {lat: lat, lng: lon};
+	        var map = new google.maps.Map(document.getElementById('location'), {
+	          zoom: 12,
+	          center: uluru
+	        });
+	        var marker = new google.maps.Marker({
+	          position: uluru,
+	          map: map
+	        });
+	      }
+
+	    $(function(){
+	    	initMap(parseFloat(<%= lat %>), parseFloat(<%= lon %>));
+	    });
+
+	</script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
+	<script type="text/javascript" src="../controllers/taskscontroller.js"></script>
+	<script src="../js/prefixfree.min.js"></script>
+	<script src="../js/notify.min.js"></script>
+	<script src="../js/core.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.3/howler.min.js"></script>
+	 <script
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCDQYzrr-swVouOyASga_GuRM0Ai_6XUxQ">
+	</script>
+
+		<script type="text/javascript">
+		$(function(){
+
+			$('.btn-create-new-task').on('click', function(){
+				$('#myModal').modal('toggle');
+			});
+
+			$('.btn-dismiss').on('click', function(){
+				window.location.replace('/');
+			});
+
+		});
+	</script>
+
+	</body>
+</html>

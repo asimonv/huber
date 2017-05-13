@@ -1,0 +1,325 @@
+.control-label{
+    font-weight: 400 !important;
+}
+
+.task-completed-notification{
+    background-color: turquoise !important;
+    display: none;
+}
+
+.task-description{
+    color: gray;
+}
+
+#add-task-button{
+    cursor: pointer;
+}
+
+.inline-ul > li{
+    display: inline;
+    list-style-type: none;
+    float: left;
+}
+
+.alert-row{
+    padding: 15px;
+}
+
+.alert-ul{
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.btn-alert{
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 6;
+    background-color: transparent;
+    margin-top: 1px;
+}
+
+.btn:focus {
+  outline: none;
+  color: white;
+}
+
+.nav>li>a:focus, .nav>li>a:hover {
+    text-decoration: none;
+    background-color: white !important;
+    color: #040404 !important;
+}
+
+.navbar-brand{
+	color: #040404;
+	font-weight: 500;
+}
+
+.navbar-nav > li > a{
+    color: #8e869d;
+    font-weight: 400;
+}
+
+.alert-title{
+    font-weight: 500;
+    font-size: larger;
+}
+
+.alert-wrapper{
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    padding: 0;
+}
+
+
+.alert-navbar{
+    text-align: center;
+    background-color: red !important;
+    display: none;
+}
+
+.nav-alert-message{
+    color: white;
+    margin-top: 10px;
+    font-weight: 500;
+}
+
+.container-alert{
+    display: flex;
+    justify-content: center;
+}
+
+.navbar{
+	background-color: white;
+}
+
+.creator-title{
+	font-size: small;
+	color: gray;
+}
+
+.tasks{
+	margin-bottom: 50px;
+}
+
+.button-update{
+	width: 100%;
+	color: white;
+	font-weight: 500;
+	font-size: large;
+	background-color: rgb(255, 90, 95);
+}
+
+#feed-title{
+	margin-bottom: 50px;
+	text-transform: uppercase;
+	text-align: center;
+}
+
+.task-goal{
+	font-weight: bolder;
+}
+
+.task-title{
+	font-weight: 400;
+	font-size: x-large;
+	text-transform: capitalize;
+}
+
+.task-current{
+	font-weight: normal;
+}
+
+#content-wrapper{
+	margin-top: 100px;
+}
+
+body{
+	margin-top: 50px;
+	color: #404040;
+    font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+#bar {
+    background: url(https://socket.io/assets/img/galaxy.jpg);
+    height: 7px;
+    background-size: cover;
+    background-position: left 60%;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    overflow: hidden;
+    z-index: 1000;
+}
+
+/*---- fonts -----*/
+@font-face {
+    font-family: "Circular";
+    src: url("../fonts/Circular_Air-Book.woff2") format('woff2');
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: "Circular";
+    src: url("../fonts/Circular_Air-Bold.woff2") format('woff2');
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: "Circular";
+    src: url("../fonts/Circular_Air-Light.woff2") format('woff2');
+    font-weight: lighter;
+}
+
+@font-face {
+    font-family: "Airglyphs";
+    src: url("../fonts/airglyphs.woff") format('woff');
+}
+
+/*----- icons -----*/
+
+.icon-title{
+	margin-left: 5px;
+}
+
+.icon-white:before{
+	color: white !important;
+}
+
+.icon {
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+}
+
+.icon:before {
+    line-height: 1;
+}
+
+.icon:before {
+    font-family: 'Airglyphs', sans-serif;
+    font-size: 2.5em;
+    color: gray;
+}
+
+.icon-completed:before{
+    color: #36D7B7 !important;
+}
+
+.icon-map-marker:before {
+    content: '\f1a9';
+}
+.icon-ok-fill:before{
+    content:'\f1b2'
+}
+
+.icon-ok:before{
+    content:'\f1b3'
+}
+
+.icon-central-heating:before {
+    content: '\f18c';
+}
+.icon-rooms:before {
+    content: '\f1cf';
+}
+.icon-washing-machine:before {
+    content: '\f208';
+}
+.icon-internet:before{
+  content: '\f19a';
+}
+.icon-shampoo:before {
+    content: '\f1d4';
+}
+.icon-parking-lot:before {
+    content: '\f1b6';
+}
+.icon-hair-dryer:before {
+    content: '\f184';
+}
+.icon-tv:before {
+    content: '\f1f8';
+}
+.icon-private-entrance:before {
+    content: '\f1c4';
+}
+.icon-kitchen:before {
+    content: '\f1ab';
+}
+.icon-breakfast:before {
+    content: '\f1ab';
+}
+.icon-hangers:before {
+    content: '\f188';
+}
+.icon-dryer:before {
+    content: '\f162';
+}
+.icon-wifi:before {
+    content: '\f20e';
+}
+.icon-fire:before {
+    content: '\f175';
+    color: white !important;
+}
+.icon-cup:before {
+    content: '\f144';
+}
+.icon-iron:before {
+    content: '\f19b';
+}
+.icon-chimney:before {
+    content: '\f176';
+}
+.icon-elevator:before {
+    content: '\f164';
+}
+.icon-paw:before {
+    content: '\f1b9';
+}
+.icon-gym:before {
+    content: '\f183';
+}
+.icon-doorbell:before {
+    content: '\f15f';
+}
+.icon-air-conditioning:before {
+    content: '\f104';
+}
+.icon-alert:before {
+    content: '\f10c';
+}
+.icon-pool:before {
+    content: '\f1c3';
+}
+.icon-accessible:before {
+    content: '\f101';
+}
+.icon-wheelchair-friendly:before {
+    content: '\f101';
+}
+
+.icon-jacuzzi:before {
+    content: '\f192';
+}
+.icon-children-friendly:before {
+    content: '\f170';
+}
+.icon-add:before {
+    content: '\f103';
+}
+.icon-xs{
+  font-size: x-small !important;
+}
+
+.icon-md:before{
+    font-size: inherit !important;
+}
+
+.icon-xs:before{
+  font-size: 1.5em !important;
+}

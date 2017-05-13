@@ -1,0 +1,66 @@
+<html ng-app>
+	<head>
+	<title>Huber</title>
+	<link rel="stylesheet" href="css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" href="css/balloons.css">
+	<!--<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">-->
+	<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+	</head>
+	<body>
+		
+		<% include ../partials/navbar %>
+		<% include ../partials/alarm-alert %>
+		<% include ../partials/task-completed-notification %>
+
+		<div class="container" id="content-wrapper" ng-controller="TaskController">
+			<div class="row">
+				<div class="col-md-3"></div>
+				<div class="col-md-6">
+					<h6 id="feed-title">live feed</h6>
+					<div id="task-container">
+						<div class="tasks" ng-repeat="task in tasks" ng-cloak>
+						<p class="creator-title">{{creatorFormatting(task.by)}} · <span>{{task.date_created}}</span> <i class="icon icon-xs icon-map-marker"></i></p>
+						<p class="task-title">{{task.name}} <i class="icon icon-md icon-completed icon-ok" style="display: {{task.completed}}"></i></p>
+						<p class="task-description">{{task.description}}</p>
+						<div class="row">
+							<div class="col-md-12">
+								<div class="row">
+									<div class="col-md-10">
+										<div class="progress">
+											  <div id="{{task._id}}" class="progress-bar {{task.progressClass}} progress-bar-striped active task-progress" role="progressbar" aria-valuenow="{{task.percentage}}" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em; width: {{task.percentage}}%">
+											    {{formatNumber(task.percentage)}}%
+											  </div>
+										</div>
+									</div>
+									<div class="col-md-2">
+										<p><span id="tsk-{{task._id}}-cr" class="task-current">{{task.current}}</span>/<span id="tsk-{{task._id}}-gl" class="task-goal">{{task.goal}}</span></p>
+									</div>
+								</div>
+								<button id="{{task._id}}" class="button-update btn">update</button>
+							</div>
+						</div></div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+
+		<% include ../partials/new-task-modal %>
+
+		<div class="particle-box"></div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
+	<script type="text/javascript" src="controllers/taskscontroller.js"></script>
+	<script src="js/prefixfree.min.js"></script>
+	<script src="js/notify.min.js"></script>
+	<script src="js/core.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.3/howler.min.js"></script>
+
+	</body>
+</html>
